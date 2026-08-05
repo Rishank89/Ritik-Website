@@ -41,6 +41,271 @@
     ]
   }
   </script>
+
+  <!-- Custom Styles for Matched Card Aesthetic -->
+  <style>
+    :root {
+      --bg-color: #f7f5ef;
+      --card-bg: #ffffff;
+      --text-main: #1a1a1a;
+      --text-muted: #555555;
+      --accent: #d97706;
+      --border-color: #e5e5e0;
+      --tag-bg: #f3f3ee;
+      --font-serif: Georgia, 'Times New Roman', serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .section-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Grid Layouts */
+    .portfolio-grid,
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    /* Card Styling matching Pratap Dental */
+    .case-card,
+    .experience-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .case-card:hover,
+    .experience-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    .case-tag,
+    .exp-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .card-title-group {
+      margin-bottom: 16px;
+    }
+
+    .case-card h3,
+    .experience-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      color: #111111;
+      line-height: 1.25;
+    }
+
+    .exp-role-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .exp-desc {
+      font-size: 0.95rem;
+      color: #333333;
+      margin-bottom: 16px;
+    }
+
+    /* Bullet List */
+    .exp-bullets {
+      margin: 0 0 20px 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .exp-bullets li {
+      margin-bottom: 6px;
+    }
+
+    /* Skill Badges / Tags */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .skills span {
+      background: var(--tag-bg);
+      color: #444444;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    /* Card Action Links & Buttons */
+    .card-actions {
+      margin-top: auto;
+      padding-top: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-card {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border: 1px solid #111111;
+      border-radius: 4px;
+      background: transparent;
+      color: #111111;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-card:hover {
+      background: #111111;
+      color: #ffffff;
+    }
+
+    .btn-card-secondary {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      text-decoration: underline;
+      padding: 8px 12px;
+    }
+
+    .btn-card-secondary:hover {
+      color: var(--accent);
+    }
+
+    /* Case Card Placeholder Styling */
+    .case-card-placeholder {
+      border: 1px dashed #d1d1ca;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 280px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    /* Placeholder Shimmer Pulse Effect */
+    .case-card-placeholder::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(217, 119, 6, 0.08) 50%,
+        transparent 100%
+      );
+      animation: placeholderShimmer 3s infinite linear;
+      pointer-events: none;
+    }
+
+    @keyframes placeholderShimmer {
+      0% { transform: translateX(-100%) translateY(-100%); }
+      100% { transform: translateX(100%) translateY(100%); }
+    }
+
+    /* Scroll In & Scroll Out Animations */
+    .reveal,
+    .case-card,
+    .case-card-placeholder,
+    .experience-card,
+    .cta-card {
+      opacity: 0;
+      transform: translateY(35px) scale(0.97);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    /* Active In-View State */
+    .in-view {
+      opacity: 1 !important;
+      transform: translateY(0) scale(1) !important;
+    }
+
+    /* Staggered Delay for Experience Grid Cards */
+    .experience-grid .experience-card:nth-child(1) { transition-delay: 0.05s; }
+    .experience-grid .experience-card:nth-child(2) { transition-delay: 0.12s; }
+    .experience-grid .experience-card:nth-child(3) { transition-delay: 0.19s; }
+    .experience-grid .experience-card:nth-child(4) { transition-delay: 0.26s; }
+    .experience-grid .experience-card:nth-child(5) { transition-delay: 0.33s; }
+
+    /* Section Typography */
+    .section-tagline {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 2.25rem;
+      margin: 0 0 12px 0;
+      color: #111;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0;
+    }
+
+    .page-header-section,
+    .experience-section,
+    .portfolio-section-page {
+      padding: 60px 0;
+    }
+  </style>
 </head>
 <body>
 
@@ -52,7 +317,7 @@
       <nav>
         <ul class="nav-menu" id="nav-menu">
           <li><a href="/" class="nav-link active">Work</a></li>
-          <li><a href="/services/"" class="nav-link">Services</a></li>
+          <li><a href="/services/" class="nav-link">Services</a></li>
           <li><a href="/about/" class="nav-link">About</a></li>
           <li><a href="/contact/" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">Book a Call</a></li>
         </ul>
@@ -79,26 +344,39 @@
   <section class="portfolio-section-page reveal">
     <div class="section-container">
       <div class="portfolio-grid">
-        <!-- Project 1 -->
+        
+        <!-- Project 1 (Pratap Dental) -->
         <div class="case-card">
-          <span class="case-tag">Live Project &middot; Web + SEO</span>
-          <h3>Pratap Dental Clinic</h3>
-          
-          <div class="case-meta">
-            <p><strong>Client:</strong> Pratap Dental Clinic, Chauri Chaura (Gorakhpur)</p>
-            <p><strong>What I did:</strong> Built <a href="https://pratapdental.in" target="_blank" style="text-decoration: underline; color: var(--accent);">pratapdental.in</a> from scratch — full website, SEO meta setup, and integrated WhatsApp appointment form routing.</p>
-            <p><strong>Result:</strong> Local dental clinic now has an active, accessible digital presence generating online bookings.</p>
+          <div>
+            <span class="case-tag">Live Project &middot; Web + SEO</span>
+            <div class="card-title-group">
+              <h3>Pratap Dental Clinic</h3>
+            </div>
+            
+            <div class="case-meta" style="font-size: 0.92rem; color: #333; margin-bottom: 20px;">
+              <p style="margin: 0 0 8px 0;"><strong>Client:</strong> Pratap Dental Clinic, Chauri Chaura (Gorakhpur)</p>
+              <p style="margin: 0 0 8px 0;"><strong>What I did:</strong> Built <a href="https://pratapdental.in" target="_blank" style="text-decoration: underline; color: var(--accent);">pratapdental.in</a> from scratch — full website, SEO meta setup, and integrated WhatsApp appointment form routing.</p>
+              <p style="margin: 0;"><strong>Result:</strong> Local dental clinic now has an active, accessible digital presence generating online bookings.</p>
+            </div>
           </div>
           
-          <a href="https://pratapdental.in" target="_blank" class="btn btn-secondary">Visit Live Website &rarr;</a>
+          <div class="card-actions">
+            <a href="https://pratapdental.in" target="_blank" rel="noopener" class="btn-card">
+              Visit Live Website &rarr;
+            </a>
+          </div>
         </div>
         
         <!-- Case Study Placeholder -->
         <div class="case-card-placeholder">
-          <h3> <a href="https://sites.google.com/view/ritik-projects/home" target="_blank" class="btn btn-secondary">Visit other projects &rarr;</a>
-        </div></h3>
-          <p>Currently optimizing new campaigns and builds.</p>
+          <div style="margin-bottom: 16px;">
+            <a href="https://sites.google.com/view/ritik-projects/home" target="_blank" rel="noopener" class="btn-card">
+              Visit other projects &rarr;
+            </a>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin: 0;">Currently optimizing new campaigns and builds.</p>
         </div>
+
       </div>
     </div>
   </section>
@@ -303,18 +581,19 @@
 
     </div>
   </section>
+
   <!-- CTA Section -->
-  <section class="cta-section reveal">
+  <section class="cta-section reveal" style="padding: 60px 0;">
     <div class="section-container">
-      <div class="cta-card">
+      <div class="cta-card" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 40px; text-align: center;">
         <div class="cta-content">
-          <h2 class="cta-title">Let's build something that converts.</h2>
-          <p class="cta-subtitle">Free 15-minute call. No pitch. Just clarity on what's possible for your brand.</p>
-          <div class="cta-links">
-            <a href="/contact/" class="btn btn-primary" style="padding: 16px 36px; font-size: 1.05rem;">
+          <h2 class="cta-title" style="font-family: var(--font-serif); font-size: 2rem; margin: 0 0 12px 0;">Let's build something that converts.</h2>
+          <p class="cta-subtitle" style="color: var(--text-muted); margin-bottom: 24px;">Free 15-minute call. No pitch. Just clarity on what's possible for your brand.</p>
+          <div class="cta-links" style="display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap;">
+            <a href="/contact/" class="btn-card" style="background: #111; color: #fff; padding: 14px 28px;">
               Grow your business. Contact here
             </a>
-            <a href="https://wa.me/917985435889" target="_blank" class="btn-link" style="font-size: 1rem;">
+            <a href="https://wa.me/917985435889" target="_blank" rel="noopener" class="btn-card-secondary" style="font-size: 1rem;">
               Prefer WhatsApp? Chat directly &rarr;
             </a>
           </div>
@@ -324,26 +603,26 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="container footer-grid">
+  <footer style="border-top: 1px solid var(--border-color); padding: 40px 0; background: #fff;">
+    <div class="container footer-grid" style="max-width: 1140px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
       <div class="footer-brand">
-        <span class="footer-logo">Ritik Chauhan.</span>
-        <p class="footer-tagline">Performance Marketing &amp; AI Creative Strategy</p>
+        <span class="footer-logo" style="font-weight: 700; font-size: 1.1rem;">Ritik Chauhan.</span>
+        <p class="footer-tagline" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Performance Marketing &amp; AI Creative Strategy</p>
       </div>
       
-      <nav class="footer-nav">
-        <a href="/">Work</a>
-        <a href="/services/"">Services</a>
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
+      <nav class="footer-nav" style="display: flex; gap: 20px; align-items: center;">
+        <a href="/" style="color: var(--text-main); text-decoration: none; font-size: 0.9rem;">Work</a>
+        <a href="/services/" style="color: var(--text-main); text-decoration: none; font-size: 0.9rem;">Services</a>
+        <a href="/about/" style="color: var(--text-main); text-decoration: none; font-size: 0.9rem;">About</a>
+        <a href="/contact/" style="color: var(--text-main); text-decoration: none; font-size: 0.9rem;">Contact</a>
       </nav>
       
-      <div class="footer-contact">
-        <p><strong>Email:</strong> <a href="mailto:ritikch2901@gmail.com">ritikch2901@gmail.com</a></p>
-        <p><strong>WhatsApp / Call:</strong> <a href="https://wa.me/917985435889" target="_blank" rel="noopener noreferrer">+91 7985435889</a></p>
+      <div class="footer-contact" style="font-size: 0.9rem; color: var(--text-muted);">
+        <p style="margin: 0 0 4px 0;"><strong>Email:</strong> <a href="mailto:ritikch2901@gmail.com" style="color: var(--text-main);">ritikch2901@gmail.com</a></p>
+        <p style="margin: 0;"><strong>WhatsApp / Call:</strong> <a href="https://wa.me/917985435889" target="_blank" rel="noopener" style="color: var(--text-main);">+91 7985435889</a></p>
       </div>
       
-      <div class="footer-copyright">
+      <div class="footer-copyright" style="width: 100%; border-top: 1px solid var(--border-color); padding-top: 20px; font-size: 0.85rem; color: var(--text-muted); display: flex; justify-content: space-between;">
         <span>&copy; 2026 Ritik Chauhan. Lucknow, India.</span>
         <span>Google Certified Ads Manager</span>
       </div>
@@ -352,5 +631,32 @@
 
   <!-- Application Script -->
   <script src="../app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Elements targeted for scroll in / out animation
+      const targetElements = document.querySelectorAll('.reveal, .case-card, .case-card-placeholder, .experience-card, .cta-card');
+
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.15
+      };
+
+      const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate IN when scrolling into view
+            entry.target.classList.add('in-view');
+          } else {
+            // Animate OUT when scrolling out of view
+            entry.target.classList.remove('in-view');
+          }
+        });
+      }, observerOptions);
+
+      targetElements.forEach((el) => scrollObserver.observe(el));
+    });
+  </script>
 </body>
 </html>
