@@ -581,6 +581,411 @@
 
     </div>
   </section>
+  <!-- =============================================
+     FEATURED REELS SHOWCASE SECTION
+     ============================================= -->
+<style>
+  /* Reels Section Styling matching Website Theme */
+  .reels-section {
+    padding: 60px 0;
+  }
+
+  .reels-heading {
+    margin-bottom: 36px;
+  }
+
+  /* Flex Layout: Force Side-by-Side Grid */
+  .reels-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 28px;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  /* Responsive fallback for smaller screens */
+  @media (max-width: 720px) {
+    .reels-grid {
+      flex-wrap: wrap;
+    }
+  }
+
+  /* Individual Reel Card - Styled like website case cards */
+  .reel-card {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border-color, #e5e5e0);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  .reel-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Video Frame Container - Realistic Phone Scale */
+  .reel-video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #111111;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color, #e5e5e0);
+  }
+
+  /* Video fitting */
+  .reel-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Tag style matching site --accent */
+  .reel-brand-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent, #d97706);
+    margin-bottom: 8px;
+  }
+
+  /* Title matching site serif headers */
+  .reel-card-title {
+    font-family: var(--font-serif, Georgia, 'Times New Roman', serif);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    color: #111111;
+    line-height: 1.25;
+  }
+
+  .reel-card-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted, #555555);
+    margin: 0 0 4px 0;
+    line-height: 1.5;
+  }
+
+  /* Unmute / Mute Floating Overlay Button */
+  .sound-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .sound-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.08);
+  }
+
+  .sound-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Skill badging matching site style */
+  .reel-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .reel-skills span {
+    background: var(--tag-bg, #f3f3ee);
+    color: #444444;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  /* Card Actions & Instagram Link Button */
+  .reel-actions {
+    margin-top: auto;
+    padding-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-card-insta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border: 1px solid #111111;
+    border-radius: 4px;
+    background: transparent;
+    color: #111111;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-card-insta:hover {
+    background: #111111;
+    color: #ffffff;
+  }
+
+  /* Play/Pause Overlay Indicator */
+  .play-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(0, 0, 0, 0.65);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .reel-card.paused .play-indicator {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+</style>
+
+<section class="reels-section reveal">
+  <div class="section-container">
+
+    <div class="reels-heading">
+      <span class="section-tagline">Creative Strategy in Action</span>
+      <h2 class="section-title">Direct Response Video Creatives</h2>
+    </div>
+
+    <div class="reels-grid">
+      
+      <!-- REEL CARD 1 (Promo Reel) -->
+      <div class="reel-card">
+        <div>
+          <span class="reel-brand-tag">E-Commerce &bull; Performance</span>
+          <div class="card-title-group">
+            <h3 class="reel-card-title">Promo Reel Concept</h3>
+          </div>
+          <p class="reel-card-desc">
+            Direct response promotional reel focused on strong visual hook and rapid brand storytelling.
+          </p>
+
+          <div class="reel-video-wrapper">
+            <video 
+              class="reel-video" 
+              src="https://res.cloudinary.com/wyxfaknv/video/upload/v1788475982/Promo_reel.mp4" 
+              autoplay
+              muted
+              loop 
+              playsinline 
+              webkit-playsinline
+              preload="auto"
+            ></video>
+            <button class="sound-btn" title="Toggle Sound" aria-label="Toggle Sound">
+              <!-- Muted Icon Vector Drawing (Default) -->
+              <svg class="icon-muted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+              <!-- Unmuted Icon Vector Drawing -->
+              <svg class="icon-unmuted" viewBox="0 0 24 24" style="display: none;">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </button>
+            <div class="play-indicator">
+              <i class="fa-solid fa-play"></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="reel-skills">
+            <span>Video Ads</span>
+            <span>Direct Response</span>
+            <span>Ad Editing</span>
+          </div>
+
+          <div class="reel-actions">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener" class="btn-card-insta">
+              <i class="fa-brands fa-instagram"></i> Watch on Instagram &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- REEL CARD 2 (Teacher Reel) -->
+      <div class="reel-card">
+        <div>
+          <span class="reel-brand-tag">Education &bull; Content Strategy</span>
+          <div class="card-title-group">
+            <h3 class="reel-card-title">Teacher Reel Strategy</h3>
+          </div>
+          <p class="reel-card-desc">
+            Educational creative content framework built for high retention and organic engagement.
+          </p>
+
+          <div class="reel-video-wrapper">
+            <video 
+              class="reel-video" 
+              src="https://res.cloudinary.com/wyxfaknv/video/upload/v1788475939/Teacher_reel.mp4" 
+              autoplay
+              muted
+              loop 
+              playsinline 
+              webkit-playsinline
+              preload="auto"
+            ></video>
+            <button class="sound-btn" title="Toggle Sound" aria-label="Toggle Sound">
+              <!-- Muted Icon Vector Drawing (Default) -->
+              <svg class="icon-muted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+              <!-- Unmuted Icon Vector Drawing -->
+              <svg class="icon-unmuted" viewBox="0 0 24 24" style="display: none;">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </button>
+            <div class="play-indicator">
+              <i class="fa-solid fa-play"></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="reel-skills">
+            <span>Educational Creative</span>
+            <span>Retention Hooks</span>
+            <span>Strategy</span>
+          </div>
+
+          <div class="reel-actions">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener" class="btn-card-insta">
+              <i class="fa-brands fa-instagram"></i> Watch on Instagram &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const reelCards = document.querySelectorAll(".reel-card");
+
+    reelCards.forEach((card) => {
+      const video = card.querySelector(".reel-video");
+      const soundBtn = card.querySelector(".sound-btn");
+      const iconMuted = soundBtn ? soundBtn.querySelector(".icon-muted") : null;
+      const iconUnmuted = soundBtn ? soundBtn.querySelector(".icon-unmuted") : null;
+
+      // Force video muted state & attempt initial play
+      if (video) {
+        video.muted = true;
+        video.play().catch(() => {});
+      }
+
+      // Sound toggle action
+      if (soundBtn && video) {
+        soundBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          video.muted = !video.muted;
+          if (iconMuted && iconUnmuted) {
+            iconMuted.style.display = video.muted ? "block" : "none";
+            iconUnmuted.style.display = video.muted ? "none" : "block";
+          }
+        });
+      }
+
+      // Card click to pause/play
+      card.addEventListener("click", () => {
+        if (!video) return;
+        if (video.paused) {
+          video.play();
+          card.classList.remove("paused");
+        } else {
+          video.pause();
+          card.classList.add("paused");
+        }
+      });
+    });
+
+    // IntersectionObserver to pause when out of view & play when visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target.querySelector(".reel-video");
+          if (!video) return;
+          if (entry.isIntersecting) {
+            video.play().then(() => {
+              entry.target.classList.remove("paused");
+            }).catch(() => {});
+          } else {
+            video.pause();
+            entry.target.classList.add("paused");
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    reelCards.forEach((card) => observer.observe(card));
+  });
+</script>
 
   <!-- CTA Section -->
   <section class="cta-section reveal" style="padding: 60px 0;">
